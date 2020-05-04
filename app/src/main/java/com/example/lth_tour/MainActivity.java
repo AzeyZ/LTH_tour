@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
                     } else{
                     getCurrentLocation();
                 }
-
+            openPlatsActivity();
             }
         });
 
@@ -70,6 +70,11 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    public void openPlatsActivity(){
+        Intent intent = new Intent(this, PlatsActivity.class);
+        startActivity(intent);
     }
 
     private void getCurrentLocation(){

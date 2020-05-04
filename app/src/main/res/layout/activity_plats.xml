@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PlatsActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:background="#4D4C44"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme" />
+
+    <TextView
+        android:id="@+id/toolbar_title"
+        android:layout_width="84dp"
+        android:layout_height="35dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="7dp"
+        android:layout_marginTop="7dp"
+        android:fontFamily="@font/abhaya_libre"
+        android:gravity="center_horizontal|top"
+        android:text="Kontakta oss"
+        android:textColor="#F5F3ED"
+        android:textSize="14dp" />
+
+    <ImageButton
+        android:id="@+id/homeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="-4dp"
+        android:backgroundTint="#4D4C44"
+        app:srcCompat="@drawable/ic_home_white_24dp" />
+
+    <TextView
+        android:id="@+id/bild_rubrik"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"
+
+        android:layout_marginTop="20dp"
+        android:background="#F5F3ED"
+        android:fontFamily="@font/roboto"
+        android:padding="10dp"
+        android:text="E-Huset"
+        android:textColor="#855D2A" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="match_parent"
+        android:scaleType="fitXY"
+        android:layout_height="250dp"
+        android:layout_below="@+id/bild_rubrik"
+        android:layout_marginTop="0dp"
+        android:background="#0C0C0C"
+        app:srcCompat="@drawable/ehuset" />
+
+    <TextView
+        android:id="@+id/bild_underrubrik"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/imageView2"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="30dp"
+        android:background="#FFFFFF"
+        android:fontFamily="@font/abhaya_libre"
+        android:padding="5dp"
+        android:text="Du är vid E-huset"
+        android:textColor="#855D2A"
+        android:textSize="24dp" />
+
+    <TextView
+        android:id="@+id/textbox"
+        android:layout_width="match_parent"
+        android:autoSizeTextType="uniform"
+        android:autoSizeMinTextSize="10sp"
+        android:autoSizeMaxTextSize="100sp"
+        android:autoSizeStepGranularity="1dp"
+        android:layout_height="260dp"
+        android:layout_below="@+id/imageView2"
+        android:layout_marginTop="20dp"
+        android:background="#DBE8ED"
+        android:padding="28dp"
+        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc porta, neque et imperdiet imperdiet, enim purus porta tellus, ut tincidunt erat enim vitae enim. Vestibulum fermentum, lacus et pharetra facilisis, leo leo volutpat nisl, vitae dictum eros leo vel justo. Cras sit amet ullamcorper felis, ut ultrices leo. Praesent id pellentesque sem, sed vehicula arcu. Etiam varius risus non lorem tempus, ut auctor nisl lacinia. Praesent et massa quis erat accumsan malesuada. Aliquam libero ipsum, varius at molestie sit amet, volutpat at urna. Integer congue scelerisque eleifend. Proin ac mollis nisl, a facilisis sapien. Vivamus fringilla quam lectus, eu maximus."
+        android:textColor="#4D4C44"
+        android:textSize="12dp" />
+
+    <TextView
+        android:id="@+id/textbox_rubrik"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignTop="@+id/textbox"
+        android:layout_marginStart="27dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginEnd="27dp"
+        android:layout_marginBottom="27dp"
+        android:fontFamily="@font/abhaya_libre_bold"
+        android:text="E-Huset"
+        android:textColor="#4D4C44"
+        android:textSize="18dp" />
+
+    <ImageButton
+        android:id="@+id/imageButton_readmore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textbox"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="10dp"
+        android:backgroundTint="#DBE8ED"
+        app:srcCompat="@drawable/readmore" />
+
+    <ImageView
+        android:id="@+id/image_lthlogo"
+        android:layout_width="80dp"
+        android:scaleType="fitXY"
+        android:layout_height="40dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        app:srcCompat="@drawable/lthlogo" />
+</RelativeLayout>
