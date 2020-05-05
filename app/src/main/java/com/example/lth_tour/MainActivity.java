@@ -46,7 +46,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startGPS(v);
-            openPlatsActivity();
+                if(latitude==55.7081042 && longitude==13.2088848) {
+                    openPlatsActivity();
+                }else{
+                    openGpsActivity();
+                }
             }
         });
 
@@ -80,6 +84,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openPlatsActivity(){
+        Intent intent = new Intent(this, PlatsActivity.class);
+        startActivity(intent);
+    }
+    public void openGpsActivity(){
         Intent intent = new Intent(this, GpsActivity.class);
         startActivity(intent);
     }
@@ -102,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
                             latitude = locationResult.getLocations().get(latestLocationIndex).getLatitude();
                             longitude = locationResult.getLocations().get(latestLocationIndex).getLongitude();
                             textView.setText(
-                            String.format("Latitude: %s\n Longitude: %s ", latitude, longitude));
+                            String.format("Latitude: %s\nLongitude: %s ", latitude, longitude));
                         }
                     }
                 }, Looper.getMainLooper());
