@@ -26,28 +26,26 @@ public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_LOCATION_PERMISSION= 1;
     private TextView textView;
     private Button button;
+    public double latitude;
+    public double longitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-       // textView = (TextView) findViewById(R.id.textView4);
+       textView = (TextView) findViewById(R.id.textView);
         button= (Button) findViewById(R.id.searchButton);
-
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               startGPS(v);
+            }
+        });
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(ContextCompat.checkSelfPermission(
-                    getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
-                        ActivityCompat.requestPermissions(
-                                MainActivity.this,
-                                new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                                REQUEST_CODE_LOCATION_PERMISSION
-                        );
-                    } else{
-                    //getCurrentLocation();
-                }
+                startGPS(v);
             openPlatsActivity();
             }
         });
@@ -56,7 +54,22 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
- /*   @Override
+    private void startGPS(View v){
+        if(ContextCompat.checkSelfPermission(
+                getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+                ActivityCompat.requestPermissions(
+                    MainActivity.this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    REQUEST_CODE_LOCATION_PERMISSION
+            );
+        } else{
+            getCurrentLocation();
+        }
+    }
+
+
+
+   @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if(requestCode==REQUEST_CODE_LOCATION_PERMISSION && grantResults.length>0){
@@ -64,14 +77,14 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
             }
         }
-    }*/
+    }
 
     public void openPlatsActivity(){
-        Intent intent = new Intent(this, PlatsActivity.class);
+        Intent intent = new Intent(this, GpsActivity.class);
         startActivity(intent);
     }
 
-    /*private void getCurrentLocation(){
+    private void getCurrentLocation(){
         LocationRequest locationRequest = new LocationRequest();
         locationRequest.setInterval(10000);
         locationRequest.setFastestInterval(3000);
@@ -86,8 +99,8 @@ public class MainActivity extends AppCompatActivity {
                                 .removeLocationUpdates(this);
                         if(locationResult!=null && locationResult.getLocations().size()>0){
                             int latestLocationIndex = locationResult.getLocations().size()-1;
-                            double latitude = locationResult.getLocations().get(latestLocationIndex).getLatitude();
-                            double longitude = locationResult.getLocations().get(latestLocationIndex).getLongitude();
+                            latitude = locationResult.getLocations().get(latestLocationIndex).getLatitude();
+                            longitude = locationResult.getLocations().get(latestLocationIndex).getLongitude();
                             textView.setText(
                             String.format("Latitude: %s\n Longitude: %s ", latitude, longitude));
                         }
@@ -95,6 +108,6 @@ public class MainActivity extends AppCompatActivity {
                 }, Looper.getMainLooper());
 
 
-    }*/
+    }
 }
 

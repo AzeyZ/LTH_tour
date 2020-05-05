@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PlatsActivity">
+
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:background="#4D4C44"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/toolbar_title"
+        android:layout_width="84dp"
+        android:layout_height="35dp"
+        android:layout_marginLeft="7dp"
+        android:layout_marginTop="7dp"
+        android:fontFamily="@font/abhaya_libre"
+        android:gravity="center_horizontal|top"
+        android:text="Kontakta oss"
+        android:textColor="#F5F3ED"
+        android:textSize="14dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/homeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="-4dp"
+        android:backgroundTint="#4D4C44"
+        app:srcCompat="@drawable/ic_home_white_24dp" />
+
+    <ImageView
+        android:id="@+id/image_lthlogo"
+        android:layout_width="80dp"
+        android:scaleType="fitXY"
+        android:layout_height="40dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        app:srcCompat="@drawable/lthlogo" />
+    <TextView
+        android:id="@+id/txt_heading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:gravity="center_horizontal"
+        android:text="Följ pilen, nästa mål når du om: "
+        android:textAlignment="center"
+        android:textColor="#855D2A"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/txt_meter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txt_heading"
+        android:text="0 m"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
+        android:textColor="#855D2A"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginTop="15dp"
+
+        />
+
+    <ImageView
+        android:id="@+id/img_arrow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txt_heading"
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="100dp"
+        android:layout_above="@id/image_lthlogo"
+        android:src="@drawable/arrow"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_heading" />
+</RelativeLayout>
+
