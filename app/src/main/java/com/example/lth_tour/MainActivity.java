@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_LOCATION_PERMISSION= 1;
     private TextView textView;
     private Button button;
+    private ImageView info_but;
     public double latitude;
     public double longitude;
 
@@ -36,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
        textView = (TextView) findViewById(R.id.textView);
         button= (Button) findViewById(R.id.searchButton);
+        info_but = (ImageView) findViewById(R.id.infoButton);
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,6 +54,12 @@ public class MainActivity extends AppCompatActivity {
                 }else{
                     openGpsActivity();
                 }
+            }
+        });
+        info_but.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openPlatsActivity();;
             }
         });
 
