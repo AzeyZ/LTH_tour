@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-       textView = (TextView) findViewById(R.id.textView);
+        textView = (TextView) findViewById(R.id.textView);
         button= (Button) findViewById(R.id.searchButton);
         info_but = (ImageView) findViewById(R.id.infoButton);
         textView.setOnClickListener(new View.OnClickListener() {
@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startGPS(v);
-                if(latitude==55.7081042 && longitude==13.2088848) {
+                if(Utils.calculateDistanceTo(latitude,longitude,55.6971392, 13.1967143)[0] < 15) {
                     openPlatsActivity();
                 }else{
                     openGpsActivity();

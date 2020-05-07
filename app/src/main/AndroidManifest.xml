@@ -12,12 +12,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".GpsActivity"></activity>
+        <service
+            android:name=".Gps_service"
+            android:foregroundServiceType="location"
+            ></service>
 
-        <activity android:name=".PlatsActivity"
-            android:screenOrientation="portrait"
-            android:configChanges="orientation|keyboardHidden">
-            </activity>
+        <activity android:name=".GpsActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".PlatsActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
