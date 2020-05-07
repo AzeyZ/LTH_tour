@@ -18,7 +18,6 @@ import android.location.Location;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Looper;
-import android.renderscript.ScriptGroup;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -28,6 +27,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -42,7 +42,7 @@ public class GpsActivity extends AppCompatActivity implements SensorEventListene
     private TextView txtMeter;
     private TextView txt_heading;
     private MyReceiver myReceiver;
-    private Gps_service gps_service = null;
+    private GpsService mService = null;
     private boolean mBound = false;
     ImageView arrow_img;
     int mAzimuth;
@@ -59,33 +59,33 @@ public class GpsActivity extends AppCompatActivity implements SensorEventListene
 
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
-            Gps_service.LocalBinder binder = (Gps_service.LocalBinder) service;
-            gps_service = binder.getService();
+            GpsService.LocalBinder binder = (GpsService.LocalBinder) service;
+            mService = binder.getService();
             mBound = true;
         }
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
-            gps_service = null;
+            mService = null;
             mBound = false;
         }
     };
-    private boolean myReceiverIsRegistered = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        myReceiver = new MyReceiver();
         setContentView(R.layout.activity_gps);
+        mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        start();
+    }
 
+    @Override
+    public void onStart() {
+        super.onStart();
         txtMeter = (TextView) findViewById(R.id.txt_meter);
         txt_heading = (TextView) findViewById(R.id.txt_heading);
-        myReceiver = new MyReceiver();
-        IntentFilter filter = new IntentFilter("com.example.lth_tour.TEST");
-        registerReceiver(myReceiver, filter);
 
-        if(mBound){
-            Toast.makeText(this,"connected",Toast.LENGTH_LONG).show();
-        }
 
         homeButton = (ImageButton) findViewById(R.id.homeButton);
         homeButton.setOnClickListener(new View.OnClickListener() {
@@ -95,43 +95,17 @@ public class GpsActivity extends AppCompatActivity implements SensorEventListene
             }
         });
         arrow_img = findViewById(R.id.img_arrow);
-        mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        start();
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        bindService(new Intent(GpsActivity.this, Gps_service.class), mServiceConnection,
+        bindService(new Intent(GpsActivity.this, GpsService.class), mServiceConnection,
                 Context.BIND_AUTO_CREATE);
-        Intent i = new Intent(getApplicationContext(), Gps_service.class);
-        startService(i);
-        if(mBound){
-            Toast.makeText(this,"connected",Toast.LENGTH_LONG).show();
-        }
 
-        startGPS();
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        start();
-        if (!myReceiverIsRegistered) {
-            registerReceiver(myReceiver, new IntentFilter("com.example.lth_tour.TEST"));
-            myReceiverIsRegistered = true;
-        }
-    }
 
     @Override
     public void onPause() {
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(myReceiver);
         super.onPause();
         stop();
-        if (myReceiverIsRegistered) {
-            unregisterReceiver(myReceiver);
-            myReceiverIsRegistered = false;
-        }
     }
 
     public void openMainActivity(){
@@ -139,45 +113,24 @@ public class GpsActivity extends AppCompatActivity implements SensorEventListene
         startActivity(intent);
     }
 
-    private void startGPS(){
-        if(ContextCompat.checkSelfPermission(
-                getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(
-                    GpsActivity.this,
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                    REQUEST_CODE_LOCATION_PERMISSION
-            );
-        } else{
-            getCurrentLocation();
-        }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        LocalBroadcastManager.getInstance(this).registerReceiver(myReceiver,
+                new IntentFilter(GpsService.ACTION_BROADCAST));
+        start();
     }
 
-    private void getCurrentLocation(){
-
-        LocationRequest locationRequest = new LocationRequest();
-        locationRequest.setInterval(10000);
-        locationRequest.setFastestInterval(3000);
-        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-
-        LocationServices.getFusedLocationProviderClient(GpsActivity.this)
-                .requestLocationUpdates(locationRequest,new LocationCallback(){
-                    @Override
-                    public void onLocationResult(LocationResult locationResult) {
-                        super.onLocationResult(locationResult);
-                        LocationServices.getFusedLocationProviderClient(GpsActivity.this)
-                                .removeLocationUpdates(this);
-                        if(locationResult!=null && locationResult.getLocations().size()>0){
-                            int latestLocationIndex = locationResult.getLocations().size()-1;
-                            results[0] = locationResult.getLocations().get(latestLocationIndex).getLatitude();
-                            results[1] = locationResult.getLocations().get(latestLocationIndex).getLongitude();
-                            float[] calculations = Utils.calculateDistanceTo(results[0],results[1],55.697137, 13.196758);
-                            double distance = calculations[0];
-                            bearing = (int)calculations[1];
-                            txtMeter.setText((int)distance + " m");
-                        }
-                    }
-                }, Looper.getMainLooper());
-
+    @Override
+    protected void onStop() {
+        if (mBound) {
+            // Unbind from the service. This signals to the service that this activity is no longer
+            // in the foreground, and the service can respond by promoting itself to a foreground
+            // service.
+            unbindService(mServiceConnection);
+            mBound = false;
+        }
+        super.onStop();
     }
 
     @Override
@@ -253,11 +206,27 @@ public class GpsActivity extends AppCompatActivity implements SensorEventListene
     private class MyReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if(intent.getAction().equals("com.example.lth_tour.TEST")){
-            String receivedText = intent.getStringExtra("test");
-            txtMeter.setText(receivedText);
+            Location location = intent.getParcelableExtra(GpsService.EXTRA_LOCATION);
+            if (location != null) {
+                results[0] = location.getLatitude();
+                results[1] = location.getLongitude();
+                float[] AndreasHus = Utils.calculateDistanceTo(results[0],results[1],55.697137, 13.196758);
+                double distanceAndreas = AndreasHus[0];
+                bearing = (int)AndreasHus[1];
+                txtMeter.setText((int)distanceAndreas + " m");
+                if(distanceAndreas<25) {
+                    Toast toast = Toast.makeText(GpsActivity.this, "Andreas hus",Toast.LENGTH_LONG);
+                    toast.show();
+                    openPlatsActivity();
+                }
             }
+
         }
+    }
+
+    private void openPlatsActivity() {
+        Intent intent = new Intent(this, PlatsActivity.class);
+        startActivity(intent);
     }
 }
 
