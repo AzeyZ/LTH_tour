@@ -15,6 +15,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.location.Location;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Looper;
@@ -58,6 +59,7 @@ public class GpsActivity extends AppCompatActivity implements SensorEventListene
     private boolean mLastAccelerometerSet = false;
     private boolean mLastMagnetometerSet = false;
     public static Vibrator vibrator;
+    private MediaPlayer mp;
 
     private ServiceConnection mServiceConnection = new ServiceConnection() {
 
@@ -81,7 +83,7 @@ public class GpsActivity extends AppCompatActivity implements SensorEventListene
         myReceiver = new MyReceiver();
         setContentView(R.layout.activity_gps);
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-
+        mp = MediaPlayer.create(this, R.raw.alarmsound);
         start();
     }
 
@@ -160,6 +162,13 @@ public class GpsActivity extends AppCompatActivity implements SensorEventListene
         }
         mAzimuth = Math.round(mAzimuth);
         arrow_img.setRotation(-mAzimuth + bearing);
+        if((-mAzimuth + bearing) < -150 && (-mAzimuth + bearing)>-210 ){
+            mp.start();
+        }else{
+            if(mp.isPlaying()) {
+                mp.pause();
+            }
+        }
 
 
     }
