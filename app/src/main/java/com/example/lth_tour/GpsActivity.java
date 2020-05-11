@@ -216,13 +216,13 @@ public class GpsActivity extends AppCompatActivity implements SensorEventListene
             if (location != null) {
                 results[0] = location.getLatitude();
                 results[1] = location.getLongitude();
-                float[] AndreasHus = Utils.calculateDistanceTo(results[0],results[1],55.697137, 13.196758);
+                float[] AndreasHus = Utils.calculateDistanceTo(results[0],results[1],55.708328, 13.208919);
                 double distanceAndreas = AndreasHus[0];
                 bearing = (int)AndreasHus[1];
                 txtMeter.setText((int)distanceAndreas + " m");
                 if(distanceAndreas<25) {
-                    long[] pattern = { 0, 200, 500 };
-                    vibrator.vibrate(pattern, 0);
+
+                    vibrator.vibrate(2000);
 
                    Toast toast = Toast.makeText(GpsActivity.this, "Andreas hus",Toast.LENGTH_LONG);
                     toast.show();
