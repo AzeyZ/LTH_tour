@@ -91,7 +91,7 @@ public class GpsActivity extends AppCompatActivity implements SensorEventListene
         txtMeter = (TextView) findViewById(R.id.txt_meter);
         txt_heading = (TextView) findViewById(R.id.txt_heading);
 
-
+        vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         homeButton = (ImageButton) findViewById(R.id.homeButton);
         homeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,6 +143,7 @@ public class GpsActivity extends AppCompatActivity implements SensorEventListene
         if (event.sensor.getType() == Sensor.TYPE_ROTATION_VECTOR) {
             SensorManager.getRotationMatrixFromVector(rMat, event.values);
             mAzimuth = (int) (Math.toDegrees(SensorManager.getOrientation(rMat, orientation)[0]) + 360) % 360;
+
         }
 
         if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
@@ -159,6 +160,7 @@ public class GpsActivity extends AppCompatActivity implements SensorEventListene
         }
         mAzimuth = Math.round(mAzimuth);
         arrow_img.setRotation(-mAzimuth + bearing);
+
 
     }
 
@@ -211,12 +213,12 @@ public class GpsActivity extends AppCompatActivity implements SensorEventListene
     private class MyReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+
             Location location = intent.getParcelableExtra(GpsService.EXTRA_LOCATION);
             if (location != null) {
                 results[0] = location.getLatitude();
                 results[1] = location.getLongitude();
-                float[] AndreasHus = Utils.calculateDistanceTo(results[0],results[1],55.708328, 13.208919);
+                float[] AndreasHus = Utils.calculateDistanceTo(results[0],results[1],55.697137, 13.196758);
                 double distanceAndreas = AndreasHus[0];
                 bearing = (int)AndreasHus[1];
                 txtMeter.setText((int)distanceAndreas + " m");
