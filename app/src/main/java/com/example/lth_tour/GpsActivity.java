@@ -18,6 +18,8 @@ import android.location.Location;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Looper;
+
+import android.os.Vibrator;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -55,6 +57,8 @@ public class GpsActivity extends AppCompatActivity implements SensorEventListene
     private float[] mLastMagnetometer = new float[3];
     private boolean mLastAccelerometerSet = false;
     private boolean mLastMagnetometerSet = false;
+    public static Vibrator vibrator;
+
     private ServiceConnection mServiceConnection = new ServiceConnection() {
 
         @Override
@@ -77,6 +81,7 @@ public class GpsActivity extends AppCompatActivity implements SensorEventListene
         myReceiver = new MyReceiver();
         setContentView(R.layout.activity_gps);
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+
         start();
     }
 
@@ -206,6 +211,7 @@ public class GpsActivity extends AppCompatActivity implements SensorEventListene
     private class MyReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
+            vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
             Location location = intent.getParcelableExtra(GpsService.EXTRA_LOCATION);
             if (location != null) {
                 results[0] = location.getLatitude();
@@ -215,7 +221,10 @@ public class GpsActivity extends AppCompatActivity implements SensorEventListene
                 bearing = (int)AndreasHus[1];
                 txtMeter.setText((int)distanceAndreas + " m");
                 if(distanceAndreas<25) {
-                    Toast toast = Toast.makeText(GpsActivity.this, "Andreas hus",Toast.LENGTH_LONG);
+                    long[] pattern = { 0, 200, 500 };
+                    vibrator.vibrate(pattern, 0);
+
+                   Toast toast = Toast.makeText(GpsActivity.this, "Andreas hus",Toast.LENGTH_LONG);
                     toast.show();
                     openPlatsActivity();
                 }

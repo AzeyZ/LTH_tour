@@ -2,8 +2,10 @@ package com.example.lth_tour;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+
 import android.view.View;
 
 import android.widget.ImageButton;
@@ -11,6 +13,7 @@ import android.widget.ImageButton;
 public class PlatsActivity extends AppCompatActivity {
 
     private ImageButton homeButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +27,7 @@ public class PlatsActivity extends AppCompatActivity {
                 openMainActivity();
             }
         });
+
     }
 
     public void openMainActivity(){
