@@ -227,7 +227,7 @@ public class GpsActivity extends AppCompatActivity implements SensorEventListene
             if (location != null) {
                 results[0] = location.getLatitude();
                 results[1] = location.getLongitude();
-                float[] AndreasHus = Utils.calculateDistanceTo(results[0],results[1],55.697137, 13.196758);
+                float[] AndreasHus = Utils.calculateDistanceTo(results[0],results[1],55.7114, 13.1870);
                 double distanceAndreas = AndreasHus[0];
                 bearing = (int)AndreasHus[1];
                 txtMeter.setText((int)distanceAndreas + " m");

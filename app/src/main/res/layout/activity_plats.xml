@@ -50,7 +50,7 @@
         android:text="E-Huset"
         android:textColor="#855D2A" />
 
-    <ImageView
+    <ImageSwitcher
         android:id="@+id/imageView2"
         android:layout_width="match_parent"
         android:scaleType="fitXY"
