@@ -10,6 +10,7 @@ import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
     public double latitude;
     public double longitude;
     private MyReceiver myReceiver;
+    private MediaPlayer mp;
 
     // Monitors the state of the connection to the service.
     private final ServiceConnection mServiceConnection = new ServiceConnection() {
@@ -80,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
         textView = (TextView) findViewById(R.id.textView);
         button= (Button) findViewById(R.id.searchButton);
         info_but = (ImageView) findViewById(R.id.infoButton);
+        mp = MediaPlayer.create(this, R.raw.clickon);
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,8 +96,10 @@ public class MainActivity extends AppCompatActivity {
                 if(Utils.calculateDistanceTo(latitude,longitude,55.6971392, 13.1967143)[0] < 15) {
                     //openPlatsActivity();
                     openGpsActivity();
+                    mp.start();
                 }else{
                     openGpsActivity();
+                    mp.start();
                 }
             }
         });
