@@ -29,7 +29,7 @@ import java.util.ArrayList;
 
 public class GpsActivity extends AppCompatActivity implements SensorEventListener {
     private ArrayList<PlatsObjekt> platser = new ArrayList<>();
-    private int indexTour = 0;
+    private static int indexTour = 0;
     private double[] results = new double[2];
     private int bearing = 0;
     private static final int REQUEST_CODE_LOCATION_PERMISSION= 1;
@@ -234,7 +234,6 @@ public class GpsActivity extends AppCompatActivity implements SensorEventListene
                 bearing = (int)nextLocation[1];
                 txtMeter.setText((int)distanceNext + " m");
                 if(distanceNext<30) {
-                    indexTour++;
                     vibrator.vibrate(2000);
                     Toast toast = Toast.makeText(GpsActivity.this, platser.get(indexTour).title,Toast.LENGTH_LONG);
                     toast.show();
@@ -246,6 +245,12 @@ public class GpsActivity extends AppCompatActivity implements SensorEventListene
     }
 
     private void openPlatsActivity() {
+        if(indexTour<4) {
+            indexTour++;
+        }
+        else{
+            indexTour = 0;
+        }
         Intent intent = new Intent(this, PlatsActivity.class);
         intent.putExtra("plats", platser.get(indexTour));
         startActivity(intent);
