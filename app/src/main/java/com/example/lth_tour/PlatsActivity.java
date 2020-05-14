@@ -6,27 +6,41 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.View;
 
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageSwitcher;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
-public class PlatsActivity extends AppCompatActivity {
+import java.io.Serializable;
+
+public class PlatsActivity extends AppCompatActivity implements Serializable {
 
     private ImageButton homeButton;
+    private PlatsObjekt plats = new PlatsObjekt(0,0,"0", "0", "0", "0");
     ImageSwitcher imageSwitcher;
-    public double latitude;
-    public double longitude;
+    TextView rubrik;
+    TextView underRubrik;
+    TextView textbox_rubrik;
+    TextView textbox;
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent i = getIntent();
+        plats = (PlatsObjekt) i.getSerializableExtra("plats");
         setContentView(R.layout.activity_plats);
+        rubrik = (TextView) findViewById(R.id.bild_rubrik);
+        underRubrik = (TextView) findViewById(R.id.bild_underrubrik);
+        textbox_rubrik = (TextView) findViewById(R.id.textbox_rubrik);
+        textbox = (TextView) findViewById(R.id.textbox);
+
         homeButton = (ImageButton) findViewById(R.id.homeButton);
 
         homeButton.setOnClickListener(new View.OnClickListener() {
@@ -36,6 +50,15 @@ public class PlatsActivity extends AppCompatActivity {
             }
         });
 
+        };
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        rubrik.setText(plats.title);
+        underRubrik.setText("Du är vid " + plats.title);
+        textbox_rubrik.setText(plats.title);
+        textbox.setText(plats.bodyFront);
         Integer images[] ={R.drawable.ehuset, R.drawable.kcentrum};
         imageSwitcher=(ImageSwitcher) findViewById(R.id.imageView2);
         imageSwitcher.setFactory(new ViewSwitcher.ViewFactory() {
@@ -51,16 +74,17 @@ public class PlatsActivity extends AppCompatActivity {
 
 
 
-            });
-            if(Utils.calculateDistanceTo(latitude,longitude,55.6971392, 13.1967143)[0] < 15){
-                imageSwitcher.setImageResource(images[0]);
-
-        }else{
-                imageSwitcher.setImageResource(images[1]);
-            }
-        };
-
-
+        });
+        if(plats.title == "E-huset"){
+            imageSwitcher.setImageResource(images[1]);
+        }
+        else if(plats.title == "Kemi-huset"){
+            imageSwitcher.setImageResource(images[0]);
+        }
+        else{
+            imageSwitcher.setImageResource(images[0]);
+        }
+    }
 
     public void openMainActivity(){
         Intent intent = new Intent(this, MainActivity.class);

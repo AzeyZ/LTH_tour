@@ -1,6 +1,5 @@
 package com.example.lth_tour;
 
-import android.Manifest;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -9,7 +8,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
-import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -18,26 +16,20 @@ import android.location.Location;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.os.Looper;
-
+import android.os.Parcelable;
 import android.os.Vibrator;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-
-import com.google.android.gms.location.LocationCallback;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationResult;
-import com.google.android.gms.location.LocationServices;
+import java.util.ArrayList;
 
 public class GpsActivity extends AppCompatActivity implements SensorEventListener {
+    private ArrayList<PlatsObjekt> platser = new ArrayList<>();
+    private int indexTour = 0;
     private double[] results = new double[2];
     private int bearing = 0;
     private static final int REQUEST_CODE_LOCATION_PERMISSION= 1;
@@ -85,6 +77,16 @@ public class GpsActivity extends AppCompatActivity implements SensorEventListene
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         mp = MediaPlayer.create(this, R.raw.alarmsound);
         start();
+        addPlatser();
+    }
+
+    private void addPlatser(){
+        //testplatser
+        platser.add(0, new PlatsObjekt(55.697129, 13.196747,"Andreas Hus", "Här bor Andreas", "Andreas hemligheter finner du inte här","ehuset"));
+        //rundturen
+        platser.add(1,new PlatsObjekt(55.711066, 13.210312, "E-huset", "E huset info", "Mer om E-huset", "ehuset"));
+        platser.add(2,new PlatsObjekt(55.715884, 13.210055, "Kemi-huset", "Kemicentrum info", "Mer om Kemicentrum", "khuset"));
+        platser.add(3,new PlatsObjekt(55.709439, 13.209761, "maskin-huset", "Maskin huset information", "mer info om maskinhuset", "mhuset"));
     }
 
     @Override
@@ -227,15 +229,14 @@ public class GpsActivity extends AppCompatActivity implements SensorEventListene
             if (location != null) {
                 results[0] = location.getLatitude();
                 results[1] = location.getLongitude();
-                float[] AndreasHus = Utils.calculateDistanceTo(results[0],results[1],55.7114, 13.1870);
-                double distanceAndreas = AndreasHus[0];
-                bearing = (int)AndreasHus[1];
-                txtMeter.setText((int)distanceAndreas + " m");
-                if(distanceAndreas<25) {
-
+                float[] nextLocation = Utils.calculateDistanceTo(results[0],results[1],platser.get(indexTour).latitude, platser.get(indexTour).longitude);
+                double distanceNext = nextLocation[0];
+                bearing = (int)nextLocation[1];
+                txtMeter.setText((int)distanceNext + " m");
+                if(distanceNext<30) {
+                    indexTour++;
                     vibrator.vibrate(2000);
-
-                   Toast toast = Toast.makeText(GpsActivity.this, "Andreas hus",Toast.LENGTH_LONG);
+                    Toast toast = Toast.makeText(GpsActivity.this, platser.get(indexTour).title,Toast.LENGTH_LONG);
                     toast.show();
                     openPlatsActivity();
                 }
@@ -246,6 +247,7 @@ public class GpsActivity extends AppCompatActivity implements SensorEventListene
 
     private void openPlatsActivity() {
         Intent intent = new Intent(this, PlatsActivity.class);
+        intent.putExtra("plats", platser.get(indexTour));
         startActivity(intent);
     }
 }
