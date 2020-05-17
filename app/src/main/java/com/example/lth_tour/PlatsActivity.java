@@ -59,7 +59,7 @@ public class PlatsActivity extends AppCompatActivity implements Serializable {
         underRubrik.setText("Du är vid " + plats.title);
         textbox_rubrik.setText(plats.title);
         textbox.setText(plats.bodyFront);
-        Integer images[] ={R.drawable.ehuset, R.drawable.kcentrum};
+        Integer images[] ={R.drawable.ehuset, R.drawable.kcentrum, R.drawable.mhuset};
         imageSwitcher=(ImageSwitcher) findViewById(R.id.imageView2);
         imageSwitcher.setFactory(new ViewSwitcher.ViewFactory() {
             @Override
@@ -80,6 +80,9 @@ public class PlatsActivity extends AppCompatActivity implements Serializable {
         }
         else if(plats.title == "Kemi-huset"){
             imageSwitcher.setImageResource(images[0]);
+        }
+        else if(plats.title == "Maskin-huset"){
+            imageSwitcher.setImageResource(images[2]);
         }
         else{
             imageSwitcher.setImageResource(images[0]);
