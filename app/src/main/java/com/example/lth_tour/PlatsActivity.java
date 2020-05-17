@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageSwitcher;
 import android.widget.ImageView;
@@ -27,6 +28,7 @@ public class PlatsActivity extends AppCompatActivity implements Serializable {
     TextView underRubrik;
     TextView textbox_rubrik;
     TextView textbox;
+    private Button nextPlace;
 
 
 
@@ -40,6 +42,14 @@ public class PlatsActivity extends AppCompatActivity implements Serializable {
         underRubrik = (TextView) findViewById(R.id.bild_underrubrik);
         textbox_rubrik = (TextView) findViewById(R.id.textbox_rubrik);
         textbox = (TextView) findViewById(R.id.textbox);
+        nextPlace = (Button) findViewById(R.id.next_place);
+        nextPlace.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         homeButton = (ImageButton) findViewById(R.id.homeButton);
 
@@ -75,7 +85,7 @@ public class PlatsActivity extends AppCompatActivity implements Serializable {
 
 
         });
-        if(plats.title.equals("M-Huset")){
+        if(plats.title.equals("M-huset")){
             imageSwitcher.setImageResource(images[0]);
         }
         else if(plats.title.equals("E-huset")){
@@ -112,6 +122,10 @@ public class PlatsActivity extends AppCompatActivity implements Serializable {
 
     public void openMainActivity(){
         Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+    public void openGpsActivity(){
+        Intent intent = new Intent(this, GpsActivity.class);
         startActivity(intent);
     }
 }

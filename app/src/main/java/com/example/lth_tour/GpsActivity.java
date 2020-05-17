@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -21,6 +22,7 @@ import android.os.Vibrator;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
@@ -52,6 +54,7 @@ public class GpsActivity extends AppCompatActivity implements SensorEventListene
     private boolean mLastMagnetometerSet = false;
     public static Vibrator vibrator;
     private MediaPlayer mp;
+    RelativeLayout currentLayout;
 
     private ServiceConnection mServiceConnection = new ServiceConnection() {
 
@@ -78,6 +81,8 @@ public class GpsActivity extends AppCompatActivity implements SensorEventListene
         mp = MediaPlayer.create(this, R.raw.alarmsound);
         start();
         addPlatser();
+        currentLayout =
+                (RelativeLayout) findViewById(R.id.gps_layout);
     }
 
     private void addPlatser(){
@@ -173,9 +178,11 @@ public class GpsActivity extends AppCompatActivity implements SensorEventListene
         arrow_img.setRotation(-mAzimuth + bearing);
         if((-mAzimuth + bearing) < -150 && (-mAzimuth + bearing)>-210 ){
             mp.start();
+            currentLayout.setBackgroundColor(Color.RED);
         }else{
             if(mp.isPlaying()) {
                 mp.pause();
+                currentLayout.setBackgroundColor(Color.WHITE);
             }
         }
 
