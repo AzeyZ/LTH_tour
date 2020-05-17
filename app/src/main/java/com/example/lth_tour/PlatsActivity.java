@@ -57,9 +57,9 @@ public class PlatsActivity extends AppCompatActivity implements Serializable {
         super.onStart();
         rubrik.setText(plats.title);
         underRubrik.setText("Du är vid " + plats.title);
-        textbox_rubrik.setText(plats.title);
-        textbox.setText(plats.bodyFront);
-        Integer images[] ={R.drawable.ehuset, R.drawable.kcentrum, R.drawable.mhuset};
+        textbox_rubrik.setText(plats.bodyFront);
+        textbox.setText(plats.bodyMore);
+        Integer images[] ={R.drawable.mhuset, R.drawable.ehuset, R.drawable.vhuset, R.drawable.ahuset, R.drawable.ikdc, R.drawable.kcentrum, R.drawable.karhuset, R.drawable.mattehuset};
         imageSwitcher=(ImageSwitcher) findViewById(R.id.imageView2);
         imageSwitcher.setFactory(new ViewSwitcher.ViewFactory() {
             @Override
@@ -75,17 +75,38 @@ public class PlatsActivity extends AppCompatActivity implements Serializable {
 
 
         });
-        if(plats.title == "E-huset"){
-            imageSwitcher.setImageResource(images[1]);
-        }
-        else if(plats.title == "Kemi-huset"){
+        if(plats.title.equals("M-Huset")){
             imageSwitcher.setImageResource(images[0]);
         }
-        else if(plats.title == "Maskin-huset"){
+        else if(plats.title.equals("E-huset")){
+            imageSwitcher.setImageResource(images[1]);
+            textbox.setText("E-huset vid LTH är ett gemensamt hus för forskning och undervisning " +
+                    "vid institutionerna för Biomedicinsk teknik, Datavetenskap, Elektro- och informationsteknik " +
+                    "och Fastighetsvetenskap. \nI huset har E-sektionen, D-sektionen samt Lantmätarna sina lokaler.\n" +
+                    "Tillsammans driver de LED-caféet på entréplan, i anslutning till foajén.");
+
+        }
+        else if(plats.title.equals("V-huset")){
             imageSwitcher.setImageResource(images[2]);
         }
+        else if(plats.title.equals("A-huset")){
+            imageSwitcher.setImageResource(images[3]);
+        }
+        else if(plats.title.equals("IKDC")){
+            imageSwitcher.setImageResource(images[4]);
+        }
+        else if(plats.title.equals("Kemicentrum")){
+            imageSwitcher.setImageResource(images[5]);
+        }
+        else if(plats.title.equals("Kårhuset")){
+            imageSwitcher.setImageResource(images[6]);
+        }
+        else if(plats.title.equals("Mattehuset")){
+            imageSwitcher.setImageResource(images[7]);
+        }
+
         else{
-            imageSwitcher.setImageResource(images[0]);
+            imageSwitcher.setImageResource(images[1]);
         }
     }
 

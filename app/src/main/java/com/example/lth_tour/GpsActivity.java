@@ -81,12 +81,19 @@ public class GpsActivity extends AppCompatActivity implements SensorEventListene
     }
 
     private void addPlatser(){
+
         //testplatser
         platser.add(0, new PlatsObjekt(55.697129, 13.196747,"Andreas Hus", "Här bor Andreas", "Andreas hemligheter finner du inte här","ehuset"));
+
         //rundturen
-        platser.add(1,new PlatsObjekt(55.711066, 13.210312, "E-huset", "E huset info", "Mer om E-huset", "ehuset"));
-        platser.add(2,new PlatsObjekt(55.715884, 13.210055, "Kemi-huset", "Kemicentrum info", "Mer om Kemicentrum", "khuset"));
-        platser.add(3,new PlatsObjekt(55.709439, 13.209761, "maskin-huset", "Maskin huset information", "mer info om maskinhuset", "mhuset"));
+        platser.add(1,new PlatsObjekt(55.709439, 13.209761, "M-huset", "M-huset information", "mer info om M-huset", "mhuset"));
+        platser.add(2,new PlatsObjekt(55.711066, 13.210312, "E-huset", "E-huset info", "Mer om E-huset", "ehuset"));
+        platser.add(3,new PlatsObjekt(55.712557, 13.211693, "V-huset", "V-huset info", "Mer om V-huset", "vhuset"));
+        platser.add(4,new PlatsObjekt(55.713700, 13.212326, "A-huset", "A-huset info", "Mer om A-huset", "ahuset"));
+        platser.add(5,new PlatsObjekt(55.714881, 13.212598, "IKDC", "IKDC info", "Mer om IKDC", "ikdc"));
+        platser.add(6,new PlatsObjekt(55.715884, 13.210055, "Kemicentrum", "Kemicentrum info", "Mer om Kemicentrum", "khuset"));
+        platser.add(7,new PlatsObjekt(55.712248, 13.209284, "Kårhuset", "Kårhuset info", "Mer om Kårhuset", "karhuset"));
+        platser.add(8,new PlatsObjekt(55.710662, 13.206892, "Mattehuset", "Mattehuset info", "Mer om Mattehuset", "mattehuset"));
     }
 
     @Override
@@ -245,14 +252,15 @@ public class GpsActivity extends AppCompatActivity implements SensorEventListene
     }
 
     private void openPlatsActivity() {
-        if(indexTour<4) {
+        Intent intent = new Intent(this, PlatsActivity.class);
+        intent.putExtra("plats", platser.get(indexTour));
+        if(indexTour<9) {
             indexTour++;
         }
         else{
-            indexTour = 0;
+            indexTour = 1;
         }
-        Intent intent = new Intent(this, PlatsActivity.class);
-        intent.putExtra("plats", platser.get(indexTour));
+
         startActivity(intent);
     }
 }

@@ -79,7 +79,7 @@
         android:layout_width="match_parent"
         android:autoSizeTextType="uniform"
         android:autoSizeMinTextSize="10sp"
-        android:autoSizeMaxTextSize="100sp"
+        android:autoSizeMaxTextSize="20sp"
         android:autoSizeStepGranularity="1dp"
         android:layout_height="260dp"
         android:layout_below="@+id/imageView2"
