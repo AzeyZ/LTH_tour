@@ -56,6 +56,7 @@ public class GpsActivity extends AppCompatActivity implements SensorEventListene
     private MediaPlayer mp;
     RelativeLayout currentLayout;
     public TextView turnAround;
+    private TextView nextTarget;
 
     private ServiceConnection mServiceConnection = new ServiceConnection() {
 
@@ -85,6 +86,7 @@ public class GpsActivity extends AppCompatActivity implements SensorEventListene
         currentLayout =
                 (RelativeLayout) findViewById(R.id.gps_layout);
         turnAround=(TextView) findViewById(R.id.turn_around);
+        nextTarget= (TextView) findViewById(R.id.txt_heading);
     }
 
     private void addPlatser(){
@@ -251,6 +253,7 @@ public class GpsActivity extends AppCompatActivity implements SensorEventListene
                 float[] nextLocation = Utils.calculateDistanceTo(results[0],results[1],platser.get(indexTour).latitude, platser.get(indexTour).longitude);
                 double distanceNext = nextLocation[0];
                 bearing = (int)nextLocation[1];
+                nextTarget.setText("Följ pilen, "+ platser.get(indexTour).title+" nästa mål når du om: ");
                 txtMeter.setText((int)distanceNext + " m");
                 if(distanceNext<30) {
                     vibrator.vibrate(2000);
