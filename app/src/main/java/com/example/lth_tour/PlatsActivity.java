@@ -87,6 +87,9 @@ public class PlatsActivity extends AppCompatActivity implements Serializable {
         });
         if(plats.title.equals("M-huset")){
             imageSwitcher.setImageResource(images[0]);
+            textbox.setText("I M-huset, LTH, finns forskning och undervisning vid institutionerna för: Energivetenskaper," +
+                "Industriell elektroteknik och automation, Maskinteknologi, Reglerteknik & Teknisk ekonomi och logistik.\n" +
+                    "Välkomna ner i källaren i M-huset där vi i caféet serverar kaffe, mackor och annat lätt att äta.");
         }
         else if(plats.title.equals("E-huset")){
             imageSwitcher.setImageResource(images[1]);
@@ -98,25 +101,46 @@ public class PlatsActivity extends AppCompatActivity implements Serializable {
         }
         else if(plats.title.equals("V-huset")){
             imageSwitcher.setImageResource(images[2]);
+            textbox.setText("I V-huset finns verksamheter som har anknytning till projektering,"+
+                            " byggande och förvaltning av byggnader och annan infrastruktur."+
+                            " De utbildningar som främst har sin anknytning till V-huset är: " +
+                    "Civilingenjörsutbildningen i Väg och vatten, Lantmäteri, Riskhantering och Brandingenjörsutbildningen."
+                    );
         }
         else if(plats.title.equals("A-huset")){
             imageSwitcher.setImageResource(images[3]);
+            textbox.setText("Här utbildar  och vidareutbildar vi framtidens samhällsbyggare – samtidigt"+
+                    " som vi bygger upp ny kunskap inom de tre forskarutbildningsämnena arkitektur, byggande"+
+                    " och arkitektur och miljöpsykologi. Utbildning och forskning bedrivs av avdelningarna"+
+                    " för arkitektur, boende och bostadsutveckling samt energi och byggnadsdesign.");
         }
         else if(plats.title.equals("IKDC")){
             imageSwitcher.setImageResource(images[4]);
+            textbox.setText("IKDC rymmer Institutionen för designvetenskaper, Industridesignskolan"+
+                    " och flera forskningslaboratorier såsom Virtual Reality-, Usability-, Rapid Prototyping-"+
+                    ", aerosol-, klimat- och mekaniklaboratorier." +
+                    "IKDC är resultatet av Stichting Ikea Foundations satsning för att stötta utbildning i industridesign vid Lunds Tekniska Högskola.");
         }
         else if(plats.title.equals("Kemicentrum")){
             imageSwitcher.setImageResource(images[5]);
+            textbox.setText("På Kemicentrum bedrivs forskning och utbildning inom kemi i världsklass."+
+                    " Här arbetar forskare från olika forskningsområden och inriktningar inom kemin"+
+                    "Kemicentrums läge i det norra universitetsområdet i Lund.bidrar till en kreativ studie-och forskningmiljö." );
         }
         else if(plats.title.equals("Kårhuset")){
             imageSwitcher.setImageResource(images[6]);
+            textbox.setText("Teknologkåren ville ha ett eget kårhus som teknologerna på KTH och Chalmers hade, men i många år fick de nöja sig med en källare i V-huset." +
+                    "\n" +
+                    "1986 fick teknologerna nog och bestämde sig för att ta saken i egna händer.");
         }
         else if(plats.title.equals("Mattehuset")){
             imageSwitcher.setImageResource(images[7]);
+            textbox.setText("Matematikcentrum består av tre avdelningar, Matematik LTH och numerisk analys, Matematik NF och Matematisk statistik" +
+                    "I Mattehuset finns även Hilbert Café som f-sektionen driver, och här kan du bland annat köpa gott kaffe, baguetter och sallader.");
         }
-
         else{
             imageSwitcher.setImageResource(images[1]);
+            textbox.setText("FEL");
         }
     }
 

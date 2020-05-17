@@ -55,6 +55,7 @@ public class GpsActivity extends AppCompatActivity implements SensorEventListene
     public static Vibrator vibrator;
     private MediaPlayer mp;
     RelativeLayout currentLayout;
+    public TextView turnAround;
 
     private ServiceConnection mServiceConnection = new ServiceConnection() {
 
@@ -83,6 +84,7 @@ public class GpsActivity extends AppCompatActivity implements SensorEventListene
         addPlatser();
         currentLayout =
                 (RelativeLayout) findViewById(R.id.gps_layout);
+        turnAround=(TextView) findViewById(R.id.turn_around);
     }
 
     private void addPlatser(){
@@ -179,10 +181,13 @@ public class GpsActivity extends AppCompatActivity implements SensorEventListene
         if((-mAzimuth + bearing) < -150 && (-mAzimuth + bearing)>-210 ){
             mp.start();
             currentLayout.setBackgroundColor(Color.RED);
+            turnAround.setText("Vänd dig om för att se byggnaden");
+
         }else{
             if(mp.isPlaying()) {
                 mp.pause();
                 currentLayout.setBackgroundColor(Color.WHITE);
+                turnAround.setText(" ");
             }
         }
 
