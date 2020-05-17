@@ -29,7 +29,7 @@ import java.util.ArrayList;
 
 public class GpsActivity extends AppCompatActivity implements SensorEventListener {
     private ArrayList<PlatsObjekt> platser = new ArrayList<>();
-    private static int indexTour = 0;
+    private static int indexTour = 1;
     private double[] results = new double[2];
     private int bearing = 0;
     private static final int REQUEST_CODE_LOCATION_PERMISSION= 1;
@@ -82,7 +82,7 @@ public class GpsActivity extends AppCompatActivity implements SensorEventListene
 
     private void addPlatser(){
         //testplatser
-        platser.add(0, new PlatsObjekt(55.697129, 13.196747,"Andreas Hus", "Här bor Andreas", "Andreas hemligheter finner du inte här","ehuset"));
+        platser.add(4, new PlatsObjekt(55.697129, 13.196747,"Andreas Hus", "Här bor Andreas", "Andreas hemligheter finner du inte här","ehuset"));
         //rundturen
         platser.add(1,new PlatsObjekt(55.711066, 13.210312, "E-huset", "E huset info", "Mer om E-huset", "ehuset"));
         platser.add(2,new PlatsObjekt(55.715884, 13.210055, "Kemi-huset", "Kemicentrum info", "Mer om Kemicentrum", "khuset"));
