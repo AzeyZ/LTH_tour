@@ -84,8 +84,8 @@ public class GpsActivity extends AppCompatActivity implements SensorEventListene
         start();
         addPlatser();
         currentLayout =
-                (RelativeLayout) findViewById(R.id.gps_layout);
-        turnAround=(TextView) findViewById(R.id.turn_around);
+               (RelativeLayout) findViewById(R.id.gps_layout);
+        //turnAround=(TextView) findViewById(R.id.turn_around);
         nextTarget= (TextView) findViewById(R.id.txt_heading);
     }
 
@@ -183,13 +183,13 @@ public class GpsActivity extends AppCompatActivity implements SensorEventListene
         if((-mAzimuth + bearing) < -150 && (-mAzimuth + bearing)>-210 ){
             mp.start();
             currentLayout.setBackgroundColor(Color.RED);
-            turnAround.setText("Vänd dig om för att se byggnaden");
+          //  turnAround.setText("Vänd dig om för att se byggnaden");
 
         }else{
             if(mp.isPlaying()) {
                 mp.pause();
                 currentLayout.setBackgroundColor(Color.WHITE);
-                turnAround.setText(" ");
+              //  turnAround.setText(" ");
             }
         }
 
@@ -253,7 +253,7 @@ public class GpsActivity extends AppCompatActivity implements SensorEventListene
                 float[] nextLocation = Utils.calculateDistanceTo(results[0],results[1],platser.get(indexTour).latitude, platser.get(indexTour).longitude);
                 double distanceNext = nextLocation[0];
                 bearing = (int)nextLocation[1];
-                nextTarget.setText("Följ pilen, "+ platser.get(indexTour).title+" nästa mål når du om: ");
+                nextTarget.setText("Följ pilen, "+ platser.get(indexTour).title+" når du om: ");
                 txtMeter.setText((int)distanceNext + " m");
                 if(distanceNext<30) {
                     vibrator.vibrate(2000);
