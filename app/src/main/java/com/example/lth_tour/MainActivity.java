@@ -18,6 +18,7 @@ import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -39,10 +40,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final int REQUEST_CODE_LOCATION_PERMISSION= 1;
     // A reference to the service used to get location updates.
@@ -89,14 +91,28 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         myReceiver = new MyReceiver();
         setContentView(R.layout.activity_main);
+
         drawerLayout= (DrawerLayout) findViewById(R.id.relativeLayout);
         navigationView=(NavigationView) findViewById(R.id.nav_view);
         toolbar= (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        navigationView.bringToFront();
         ActionBarDrawerToggle toogle= new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toogle);
         toogle.syncState();
+        navigationView.setNavigationItemSelectedListener(this);
+
+
     }
+    public void onBackPressed(){
+        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }else {
+            super.onBackPressed();
+        }
+    }
+
+
 
     @Override
     protected void onStart() {
@@ -212,6 +228,11 @@ public class MainActivity extends AppCompatActivity {
     public void openGpsActivity(){
         Intent intent = new Intent(this, GpsActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        return true;
     }
     /*
     private void getCurrentLocation(){
