@@ -97,7 +97,7 @@ public class GpsActivity extends AppCompatActivity implements SensorEventListene
         //rundturen
         platser.add(1,new PlatsObjekt(55.709439, 13.209761, "M-huset", "M-huset information", "mer info om M-huset", "mhuset"));
         platser.add(2,new PlatsObjekt(55.711066, 13.210312, "E-huset", "E-huset info", "Mer om E-huset", "ehuset"));
-        platser.add(3,new PlatsObjekt(55.712557, 13.211693, "V-huset", "V-huset info", "Mer om V-huset", "vhuset"));
+        platser.add(3,new PlatsObjekt(55.712645, 13.210738, "V-huset", "V-huset info", "Mer om V-huset", "vhuset"));
         platser.add(4,new PlatsObjekt(55.713700, 13.212326, "A-huset", "A-huset info", "Mer om A-huset", "ahuset"));
         platser.add(5,new PlatsObjekt(55.714881, 13.212598, "IKDC", "IKDC info", "Mer om IKDC", "ikdc"));
         platser.add(6,new PlatsObjekt(55.715884, 13.210055, "Kemicentrum", "Kemicentrum info", "Mer om Kemicentrum", "khuset"));
