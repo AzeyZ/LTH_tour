@@ -52,8 +52,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     // Tracks the bound state of the service.
     private boolean mBound = false;
     private TextView textView;
-    private Button button;
+    private ImageView button;
     private ImageView info_but;
+    private ImageView väljBygg;
     public double latitude;
     public double longitude;
     private MyReceiver myReceiver;
@@ -96,6 +97,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView=(NavigationView) findViewById(R.id.nav_view);
         toolbar= (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(null);
         navigationView.bringToFront();
         ActionBarDrawerToggle toogle= new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toogle);
@@ -117,28 +119,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onStart() {
         super.onStart();
-        textView = (TextView) findViewById(R.id.textView);
-        button= (Button) findViewById(R.id.searchButton);
+        //textView = (TextView) findViewById(R.id.textView);
         info_but = (ImageView) findViewById(R.id.infoButton);
+        button = (ImageView) findViewById(R.id.search_btn);
+        väljBygg = (ImageView) findViewById(R.id.väljByggnad);
         mp = MediaPlayer.create(this, R.raw.clickon);
-        textView.setOnClickListener(new View.OnClickListener() {
+        /*textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //startGPS(v);
             }
-        });
+        });*/
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mService.requestLocationUpdates();
-                if(Utils.calculateDistanceTo(latitude,longitude,55.6971392, 13.1967143)[0] < 15) {
-                    //openPlatsActivity();
                     openGpsActivity();
                     mp.start();
-                }else{
-                    openGpsActivity();
-                    mp.start();
-                }
+            }
+        });
+        väljBygg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawerLayout.openDrawer(GravityCompat.START);
             }
         });
         info_but.setOnClickListener(new View.OnClickListener() {

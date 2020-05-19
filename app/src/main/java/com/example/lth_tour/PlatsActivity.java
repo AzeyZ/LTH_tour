@@ -38,7 +38,7 @@ public class PlatsActivity extends AppCompatActivity implements Serializable {
         Intent i = getIntent();
         plats = (PlatsObjekt) i.getSerializableExtra("plats");
         setContentView(R.layout.activity_plats);
-        rubrik = (TextView) findViewById(R.id.bild_rubrik);
+        //rubrik = (TextView) findViewById(R.id.bild_rubrik);
         underRubrik = (TextView) findViewById(R.id.bild_underrubrik);
         textbox_rubrik = (TextView) findViewById(R.id.textbox_rubrik);
         textbox = (TextView) findViewById(R.id.textbox);

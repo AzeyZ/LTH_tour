@@ -227,6 +227,7 @@ public class GpsActivity extends AppCompatActivity implements SensorEventListene
     }
 
     public void stop() {
+        mp.pause();
         if(haveSensor && haveSensor2){
             mSensorManager.unregisterListener(this,mAccelerometer);
             mSensorManager.unregisterListener(this,mMagnetometer);
