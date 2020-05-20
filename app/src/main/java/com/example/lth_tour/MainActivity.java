@@ -106,6 +106,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public void onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            GpsActivity.indexTour=1;
             drawerLayout.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
@@ -130,20 +131,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (ContextCompat.checkSelfPermission(
-                        getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(
-                            MainActivity.this,
-                            new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                            REQUEST_CODE_LOCATION_PERMISSION
-                    );
-                }
-                if (ContextCompat.checkSelfPermission(
-                        getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                    mService.requestLocationUpdates();
-                    openGpsActivity();
-                    mp.start();
-                }
+                checkPermissions();
             }
         });
         väljBygg.setOnClickListener(new View.OnClickListener() {
@@ -201,6 +189,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+        public void checkPermissions(){
+            if (ContextCompat.checkSelfPermission(
+                    getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(
+                        MainActivity.this,
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                        REQUEST_CODE_LOCATION_PERMISSION
+                );
+            }
+            if (ContextCompat.checkSelfPermission(
+                    getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                mService.requestLocationUpdates();
+                openGpsActivity();
+                mp.start();
+            }
+
+        }
     public void openPlatsActivity() {
         Intent intent = new Intent(this, PlatsActivity.class);
         startActivity(intent);
@@ -213,6 +218,43 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+        switch(item.getItemId()){
+            case R.id.nav_mhuset:
+                GpsActivity.indexTour=1;
+                checkPermissions();
+                break;
+            case R.id.nav_ehuset:
+                GpsActivity.indexTour=2;
+                checkPermissions();
+                break;
+            case R.id.nav_vhuset:
+                GpsActivity.indexTour=3;
+                checkPermissions();
+                break;
+            case R.id.nav_ahuset:
+                GpsActivity.indexTour=4;
+                checkPermissions();
+                break;
+            case R.id.nav_ikdc:
+                GpsActivity.indexTour=5;
+                checkPermissions();
+                break;
+            case R.id.nav_khuset:
+                GpsActivity.indexTour=6;
+                checkPermissions();
+                break;
+            case R.id.nav_karhuset:
+                GpsActivity.indexTour=7;
+                checkPermissions();
+                break;
+            case R.id.nav_emattehuset:
+                GpsActivity.indexTour=8;
+                checkPermissions();
+                break;
+
+        }
+
         return true;
     }
 

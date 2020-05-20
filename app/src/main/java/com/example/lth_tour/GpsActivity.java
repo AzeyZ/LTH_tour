@@ -33,7 +33,7 @@ import java.util.ArrayList;
 public class GpsActivity extends AppCompatActivity implements SensorEventListener {
 
     private ArrayList<PlatsObjekt> platser = new ArrayList<>();
-    private static int indexTour = 1;
+    public static int indexTour = 1;
     private double[] results = new double[2];
     private int bearing = 0;
     private static final int REQUEST_CODE_LOCATION_PERMISSION= 1;
