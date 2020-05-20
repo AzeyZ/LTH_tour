@@ -59,6 +59,7 @@ public class GpsActivity extends AppCompatActivity implements SensorEventListene
     RelativeLayout currentLayout;
     public TextView turnAround;
     private TextView nextTarget;
+    private ImageView lthLog;
 
     private ServiceConnection mServiceConnection = new ServiceConnection() {
 
@@ -119,6 +120,13 @@ public class GpsActivity extends AppCompatActivity implements SensorEventListene
             @Override
             public void onClick(View v) {
                 openMainActivity();
+            }
+        });
+        lthLog = (ImageView) findViewById(R.id.image_lthlogo);
+        lthLog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               openPlatsActivity();
             }
         });
         arrow_img = findViewById(R.id.img_arrow);

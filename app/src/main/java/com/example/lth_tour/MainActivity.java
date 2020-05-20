@@ -1,6 +1,7 @@
 package com.example.lth_tour;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -9,12 +10,17 @@ import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.location.Location;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Looper;
+import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
@@ -24,6 +30,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.hardware.SensorManager;
 
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -47,6 +54,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final int REQUEST_CODE_LOCATION_PERMISSION = 1;
+    public static final String PLATS_TITLE = "com.example.lth_tour.platsTitle";
     // A reference to the service used to get location updates.
     private GpsService mService = null;
     // Tracks the bound state of the service.
@@ -64,6 +72,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     Toolbar toolbar;
     Menu menu;
     TextView menuText;
+
+    //PopUp dialog
+    private ImageView closePopUp;
+    private Dialog infoDialog;
+
+    //Vibration
+    private Vibrator vibrator;
+    private long[] vibratorPattern;
+
+
+    // Shake sensor
+    private SensorManager sm;
+    private float acelVal; //current acceleration & gravity
+    private float acelLast; //last acceleration & gravity
+    private float shake; //acceleration diffr. from gravity
+
 
 
     // Monitors the state of the connection to the service.
@@ -102,7 +126,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
 
+        sm = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        sm.registerListener(sensorListener, sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
+        acelVal = SensorManager.GRAVITY_EARTH;
+        acelLast = SensorManager.GRAVITY_EARTH;
+        shake = 0.00f;
+        vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+        vibratorPattern = new long[]{0, 50}; //sleep 0 ms, vibrate 50 ms
+
+
     }
+
+
 
     public void onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
@@ -128,6 +163,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 //startGPS(v);
             }
         });*/
+        if (ContextCompat.checkSelfPermission(
+                getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(
+                    MainActivity.this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    REQUEST_CODE_LOCATION_PERMISSION
+            );
+        }
+        infoDialog = new Dialog(this);
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -143,7 +188,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         info_but.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openPlatsActivity();
+                openPopup();
             }
         });
         // Bind to the service. If the service is in foreground mode, this signals to the service
@@ -179,7 +224,46 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
 
-    @Override
+
+    private final SensorEventListener sensorListener = new SensorEventListener(){
+
+        @Override
+        public void onSensorChanged(SensorEvent event) {
+            float x = event.values[0];
+            float y = event.values[1];
+            float z = event.values[2];
+
+            acelLast = acelVal;
+            acelVal = (float)(Math.sqrt((double) (x*x+y*y+z*z) ));
+            float d = acelVal-acelLast;
+
+            shake = shake *0.9f +d;
+            if(shake > 12){
+                closePopUp();
+
+            }
+        }
+
+        @Override
+        public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+        }
+    };
+    /*
+    private void startGPS(View v){
+        if(ContextCompat.checkSelfPermission(
+                getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+                ActivityCompat.requestPermissions(
+                    MainActivity.this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    REQUEST_CODE_LOCATION_PERMISSION
+            );
+        } else{
+            getCurrentLocation();
+        }
+    }
+    */
+   @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_CODE_LOCATION_PERMISSION && grantResults.length > 0) {
@@ -206,6 +290,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
 
         }
+
+
     public void openPlatsActivity() {
         Intent intent = new Intent(this, PlatsActivity.class);
         startActivity(intent);
@@ -215,7 +301,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Intent intent = new Intent(this, GpsActivity.class);
         startActivity(intent);
     }
+    public void openPopup(){
+        infoDialog.setContentView(R.layout.info_popup);
+        closePopUp = (ImageView) infoDialog.findViewById(R.id.closePopUp);
 
+        closePopUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                closePopUp();
+            }
+        });
+        infoDialog.show();
+    }
+
+    public void closePopUp(){
+        infoDialog.dismiss();
+        vibrator.vibrate(vibratorPattern,-1);
+    }
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
