@@ -55,11 +55,10 @@ public class GpsActivity extends AppCompatActivity implements SensorEventListene
     private boolean mLastAccelerometerSet = false;
     private boolean mLastMagnetometerSet = false;
     public static Vibrator vibrator;
-    public MediaPlayer mp;
+    private MediaPlayer mp;
     RelativeLayout currentLayout;
     public TextView turnAround;
     private TextView nextTarget;
-    private boolean foreground = true;
 
     private ServiceConnection mServiceConnection = new ServiceConnection() {
 
@@ -253,7 +252,6 @@ public class GpsActivity extends AppCompatActivity implements SensorEventListene
     private class MyReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            foreground = intent.getExtras().getBoolean("foreground");;
             Location location = intent.getParcelableExtra(GpsService.EXTRA_LOCATION);
             if (location != null) {
                 results[0] = location.getLatitude();
