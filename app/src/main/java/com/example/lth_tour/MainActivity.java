@@ -54,6 +54,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final int REQUEST_CODE_LOCATION_PERMISSION = 1;
+    public static final String PLATS_TITLE = "com.example.lth_tour.platsTitle";
     // A reference to the service used to get location updates.
     private GpsService mService = null;
     // Tracks the bound state of the service.
@@ -192,7 +193,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         info_but.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openInfo_popup();
+                openPopup();
             }
         });
         // Bind to the service. If the service is in foreground mode, this signals to the service
@@ -292,7 +293,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }**/
 
 
-    public void openInfo_popup(){
+    public void openPopup(){
         infoDialog.setContentView(R.layout.info_popup);
         closePopUp = (ImageView) infoDialog.findViewById(R.id.closePopUp);
 
@@ -323,10 +324,47 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         startActivity(intent);
     }
 
+    public void openGpsActivity(String platsTitle) {
+        Intent intent = new Intent(this, GpsActivity.class);
+        intent.putExtra(PLATS_TITLE,platsTitle );
+        startActivity(intent);
+    }
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        return true;
-    }
+
+
+        switch (item.getItemId()) {
+
+            case R.id.nav_mhuset:
+                openGpsActivity("M-huset");
+                return true;
+            case R.id.nav_ehuset:
+                openGpsActivity("E-huset");
+                return true;
+            case R.id.nav_vhuset:
+                openGpsActivity("V-huset");
+                return true;
+            case R.id.nav_ahuset:
+                openGpsActivity("A-huset");
+                return true;
+            case R.id.nav_ikdc:
+                openGpsActivity("IKDC");
+                return true;
+            case R.id.nav_khuset:
+                openGpsActivity("Kemicentrum");
+                return true;
+            case R.id.nav_karhuset:
+                openGpsActivity("Kårhuset");
+                return true;
+            case R.id.nav_emattehuset:
+                openGpsActivity("mattehuset");
+                return true;
+        }
+
+    return true;
+
+    };
 
 
     /**
