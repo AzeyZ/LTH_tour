@@ -10,6 +10,10 @@ import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.location.Location;
 import android.media.MediaPlayer;
 import android.os.Build;
@@ -25,6 +29,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.hardware.SensorManager;
 
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -65,8 +70,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     Toolbar toolbar;
     Menu menu;
     TextView menuText;
+
+    //PopUp dialog
     private ImageView closePopUp;
     private Dialog infoDialog;
+
+
+    // Shake sensor
+    private SensorManager sm;
+    private float acelVal; //current acceleration & gravity
+    private float acelLast; //last acceleration & gravity
+    private float shake; //acceleration diffr. from gravity
 
 
 
@@ -107,7 +121,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout.addDrawerListener(toogle);
         toogle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
-
+        sm = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        sm.registerListener(sensorListener, sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
+        acelVal = SensorManager.GRAVITY_EARTH;
+        acelLast = SensorManager.GRAVITY_EARTH;
+        shake = 0.00f;
 
     }
     public void onBackPressed(){
@@ -207,6 +225,30 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+    private final SensorEventListener sensorListener = new SensorEventListener(){
+
+        @Override
+        public void onSensorChanged(SensorEvent event) {
+            float x = event.values[0];
+            float y = event.values[1];
+            float z = event.values[2];
+
+            acelLast = acelVal;
+            acelVal = (float)(Math.sqrt((double) (x*x+y*y+z*z) ));
+            float d = acelVal-acelLast;
+
+            shake = shake *0.9f +d;
+            if(shake > 12){
+                infoDialog.dismiss();
+
+            }
+        }
+
+        @Override
+        public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+        }
+    };
     /*
     private void startGPS(View v){
         if(ContextCompat.checkSelfPermission(
