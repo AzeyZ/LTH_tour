@@ -89,9 +89,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
 
-
-
-
     // Monitors the state of the connection to the service.
     private final ServiceConnection mServiceConnection = new ServiceConnection() {
 
@@ -139,6 +136,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
+
+
     public void onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
@@ -146,7 +145,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             super.onBackPressed();
         }
     }
-
 
 
     @Override
@@ -182,6 +180,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     mService.requestLocationUpdates();
                     openGpsActivity();
                     mp.start();
+                }
             }
         });
         väljBygg.setOnClickListener(new View.OnClickListener() {
@@ -227,24 +226,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onStop();
     }
 
-    /**
-     * Returns the current state of the permissions needed.
-     */
-    private boolean checkPermissions() {
-        return  PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION);
-    }
 
-    private void requestPermissions() {
-        if(ContextCompat.checkSelfPermission(
-                getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(
-                    MainActivity.this,
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                    REQUEST_CODE_LOCATION_PERMISSION
-            );
-        }
-    }
+
 
     private final SensorEventListener sensorListener = new SensorEventListener(){
 
@@ -285,6 +268,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
     */
    @Override
+
+
+
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_CODE_LOCATION_PERMISSION && grantResults.length > 0) {
@@ -296,13 +282,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
 
-    public void onBackPressed(){
+
+    /**public void onBackPressed(){
         if(drawerLayout.isDrawerOpen(GravityCompat.START)){
             drawerLayout.closeDrawer(GravityCompat.START);
         }else {
             super.onBackPressed();
         }
-    }
+    }**/
 
 
     public void openInfo_popup(){
@@ -323,7 +310,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         vibrator.vibrate(vibratorPattern,-1);
     }
 
+   // public void openPlatsActivity(){
+
     public void openPlatsActivity(){
+
         Intent intent = new Intent(this, PlatsActivity.class);
         startActivity(intent);
     }
