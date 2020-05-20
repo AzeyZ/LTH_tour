@@ -1,5 +1,6 @@
 package com.example.lth_tour;
 
+import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -30,6 +31,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import java.util.ArrayList;
 
 public class GpsActivity extends AppCompatActivity implements SensorEventListener {
+
     private ArrayList<PlatsObjekt> platser = new ArrayList<>();
     private static int indexTour = 1;
     private double[] results = new double[2];
@@ -53,10 +55,11 @@ public class GpsActivity extends AppCompatActivity implements SensorEventListene
     private boolean mLastAccelerometerSet = false;
     private boolean mLastMagnetometerSet = false;
     public static Vibrator vibrator;
-    private MediaPlayer mp;
+    public MediaPlayer mp;
     RelativeLayout currentLayout;
     public TextView turnAround;
     private TextView nextTarget;
+    private boolean foreground = true;
 
     private ServiceConnection mServiceConnection = new ServiceConnection() {
 
@@ -80,7 +83,7 @@ public class GpsActivity extends AppCompatActivity implements SensorEventListene
         myReceiver = new MyReceiver();
         setContentView(R.layout.activity_gps);
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        mp = MediaPlayer.create(this, R.raw.alarmsound);
+
         start();
         addPlatser();
         currentLayout =
@@ -155,6 +158,7 @@ public class GpsActivity extends AppCompatActivity implements SensorEventListene
             unbindService(mServiceConnection);
             mBound = false;
         }
+        mp.stop();
         super.onStop();
     }
 
@@ -180,23 +184,26 @@ public class GpsActivity extends AppCompatActivity implements SensorEventListene
         }
         mAzimuth = Math.round(mAzimuth);
         arrow_img.setRotation(-mAzimuth + bearing);
-        if((-mAzimuth + bearing) < -150 && (-mAzimuth + bearing)>-210 ){
-            mp.start();
-            currentLayout.setBackgroundColor(Color.RED);
-          //  turnAround.setText("Vänd dig om för att se byggnaden");
 
-        }else{
-            if(mp.isPlaying()) {
-                mp.pause();
-                currentLayout.setBackgroundColor(Color.WHITE);
-              //  turnAround.setText(" ");
+            if ((-mAzimuth + bearing) < -150 && (-mAzimuth + bearing) > -210) {
+                mp.start();
+                //currentLayout.setBackgroundColor(Color.RED);
+                //  turnAround.setText("Vänd dig om för att se byggnaden");
+
+            } else {
+                if (mp.isPlaying()) {
+                    mp.pause();
+                    currentLayout.setBackgroundColor(Color.WHITE);
+                    //  turnAround.setText(" ");
+                }
             }
-        }
+
 
 
     }
 
     public void start() {
+        mp = MediaPlayer.create(this, R.raw.alarmsound);
         if (mSensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR) == null) {
             if ((mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER) == null) || (mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD) == null)) {
                 noSensorsAlert();
@@ -246,7 +253,7 @@ public class GpsActivity extends AppCompatActivity implements SensorEventListene
     private class MyReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-
+            foreground = intent.getExtras().getBoolean("foreground");;
             Location location = intent.getParcelableExtra(GpsService.EXTRA_LOCATION);
             if (location != null) {
                 results[0] = location.getLatitude();

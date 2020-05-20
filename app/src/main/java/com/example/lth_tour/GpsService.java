@@ -321,6 +321,7 @@ public class GpsService extends Service {
         // Notify anyone listening for broadcasts about the new location.
         Intent intent = new Intent(ACTION_BROADCAST);
         intent.putExtra(EXTRA_LOCATION, location);
+        intent.putExtra("foreground", serviceIsRunningInForeground(this));
         LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
 
         // Update notification content if running as a foreground service.
