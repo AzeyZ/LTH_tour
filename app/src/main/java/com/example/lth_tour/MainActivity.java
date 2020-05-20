@@ -20,6 +20,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Looper;
+import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
@@ -75,6 +76,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ImageView closePopUp;
     private Dialog infoDialog;
 
+    //Vibration
+    private Vibrator vibrator;
+    private long[] vibratorPattern;
+
 
     // Shake sensor
     private SensorManager sm;
@@ -121,20 +126,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout.addDrawerListener(toogle);
         toogle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+
+
         sm = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         sm.registerListener(sensorListener, sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
         acelVal = SensorManager.GRAVITY_EARTH;
         acelLast = SensorManager.GRAVITY_EARTH;
         shake = 0.00f;
+        vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+        vibratorPattern = new long[]{0, 50}; //sleep 0 ms, vibrate 50 ms
+
 
     }
-    public void onBackPressed(){
-        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
-            drawerLayout.closeDrawer(GravityCompat.START);
-        }else {
-            super.onBackPressed();
-        }
-    }
+
 
 
 
@@ -239,7 +243,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             shake = shake *0.9f +d;
             if(shake > 12){
-                infoDialog.dismiss();
+                closePopUp();
 
             }
         }
@@ -273,6 +277,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+
+
+    public void onBackPressed(){
+        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }else {
+            super.onBackPressed();
+        }
+    }
+
+
     public void openInfo_popup(){
         infoDialog.setContentView(R.layout.info_popup);
         closePopUp = (ImageView) infoDialog.findViewById(R.id.closePopUp);
@@ -280,11 +295,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         closePopUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                infoDialog.dismiss();
+                closePopUp();
             }
         });
         infoDialog.show();
     }
+
+    public void closePopUp(){
+        infoDialog.dismiss();
+        vibrator.vibrate(vibratorPattern,-1);
+    }
+
     public void openPlatsActivity(){
         Intent intent = new Intent(this, PlatsActivity.class);
         startActivity(intent);
