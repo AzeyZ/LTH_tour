@@ -162,7 +162,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 //startGPS(v);
             }
         });*/
-
+        if (ContextCompat.checkSelfPermission(
+                getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(
+                    MainActivity.this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    REQUEST_CODE_LOCATION_PERMISSION
+            );
+        }
         infoDialog = new Dialog(this);
 
         button.setOnClickListener(new View.OnClickListener() {
@@ -269,9 +276,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
     */
    @Override
-
-
-
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_CODE_LOCATION_PERMISSION && grantResults.length > 0) {
@@ -325,9 +329,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void openGpsActivity(String platsTitle) {
-        Intent intent = new Intent(this, GpsActivity.class);
-        intent.putExtra(PLATS_TITLE,platsTitle );
-        startActivity(intent);
+        if (ContextCompat.checkSelfPermission(
+                getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(
+                    MainActivity.this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    REQUEST_CODE_LOCATION_PERMISSION
+            );
+        }
+        if (ContextCompat.checkSelfPermission(
+                getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            Intent intent = new Intent(this, GpsActivity.class);
+            mService.requestLocationUpdates();
+             intent.putExtra(PLATS_TITLE,platsTitle );
+            startActivity(intent);
+        }
     }
 
     @Override
