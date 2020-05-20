@@ -53,7 +53,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    private static final int REQUEST_CODE_LOCATION_PERMISSION= 1;
+    private static final int REQUEST_CODE_LOCATION_PERMISSION = 1;
     // A reference to the service used to get location updates.
     private GpsService mService = null;
     // Tracks the bound state of the service.
@@ -116,13 +116,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         myReceiver = new MyReceiver();
         setContentView(R.layout.activity_main);
 
-        drawerLayout= (DrawerLayout) findViewById(R.id.relativeLayout);
-        navigationView=(NavigationView) findViewById(R.id.nav_view);
-        toolbar= (Toolbar) findViewById(R.id.toolbar);
+        drawerLayout = (DrawerLayout) findViewById(R.id.relativeLayout);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(null);
         navigationView.bringToFront();
-        ActionBarDrawerToggle toogle= new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toogle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toogle);
         toogle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
@@ -139,6 +139,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
 
 
 
@@ -162,7 +169,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mService.requestLocationUpdates();
+                if (ContextCompat.checkSelfPermission(
+                        getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(
+                            MainActivity.this,
+                            new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                            REQUEST_CODE_LOCATION_PERMISSION
+                    );
+                }
+                if (ContextCompat.checkSelfPermission(
+                        getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                    mService.requestLocationUpdates();
                     openGpsActivity();
                     mp.start();
             }
@@ -270,8 +287,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
    @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if(requestCode==REQUEST_CODE_LOCATION_PERMISSION && grantResults.length>0){
-            if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
+        if (requestCode == REQUEST_CODE_LOCATION_PERMISSION && grantResults.length > 0) {
+            if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
                 Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
             }
         }
@@ -310,7 +327,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Intent intent = new Intent(this, PlatsActivity.class);
         startActivity(intent);
     }
-    public void openGpsActivity(){
+
+    public void openGpsActivity() {
         Intent intent = new Intent(this, GpsActivity.class);
         startActivity(intent);
     }
@@ -319,33 +337,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         return true;
     }
-    /*
-    private void getCurrentLocation(){
-        LocationRequest locationRequest = new LocationRequest();
-        locationRequest.setInterval(10000);
-        locationRequest.setFastestInterval(3000);
-        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-
-        LocationServices.getFusedLocationProviderClient(MainActivity.this)
-                .requestLocationUpdates(locationRequest,new LocationCallback(){
-                    @Override
-                    public void onLocationResult(LocationResult locationResult) {
-                        super.onLocationResult(locationResult);
-                        LocationServices.getFusedLocationProviderClient(MainActivity.this)
-                                .removeLocationUpdates(this);
-                        if(locationResult!=null && locationResult.getLocations().size()>0){
-                            int latestLocationIndex = locationResult.getLocations().size()-1;
-                            latitude = locationResult.getLocations().get(latestLocationIndex).getLatitude();
-                            longitude = locationResult.getLocations().get(latestLocationIndex).getLongitude();
-                            textView.setText(
-                            String.format("Latitude: %s\nLongitude: %s ", latitude, longitude));
-                        }
-                    }
-                }, Looper.getMainLooper());
 
 
-    }
-*/
     /**
      * Receiver for broadcasts sent by {@link GpsService}.
      */
