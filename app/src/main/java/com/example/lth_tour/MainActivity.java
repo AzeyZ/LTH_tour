@@ -1,6 +1,7 @@
 package com.example.lth_tour;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -64,6 +65,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     Toolbar toolbar;
     Menu menu;
     TextView menuText;
+    private ImageView closePopUp;
+    private Dialog infoDialog;
+
 
 
 
@@ -130,6 +134,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 //startGPS(v);
             }
         });*/
+
+        infoDialog = new Dialog(this);
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -147,7 +154,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         info_but.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openPlatsActivity();
+                openInfo_popup();
             }
         });
         // Bind to the service. If the service is in foreground mode, this signals to the service
@@ -224,6 +231,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+    public void openInfo_popup(){
+        infoDialog.setContentView(R.layout.info_popup);
+        closePopUp = (ImageView) infoDialog.findViewById(R.id.closePopUp);
+
+        closePopUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                infoDialog.dismiss();
+            }
+        });
+        infoDialog.show();
+    }
     public void openPlatsActivity(){
         Intent intent = new Intent(this, PlatsActivity.class);
         startActivity(intent);
