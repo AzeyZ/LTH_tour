@@ -4,12 +4,15 @@ import android.Manifest;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
+import android.content.ContentProviderClient;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -89,6 +92,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private float shake; //acceleration diffr. from gravity
 
 
+    //test
+    private ImageView image_lthlogo;
 
     // Monitors the state of the connection to the service.
     private final ServiceConnection mServiceConnection = new ServiceConnection() {
@@ -156,6 +161,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         info_but = (ImageView) findViewById(R.id.infoButton);
         button = (ImageView) findViewById(R.id.search_btn);
         väljBygg = (ImageView) findViewById(R.id.väljByggnad);
+        image_lthlogo = (ImageView) findViewById(R.id.image_lthlogo);
         mp = MediaPlayer.create(this, R.raw.clickon);
         /*textView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -195,6 +201,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // that since this activity is in the foreground, the service can exit foreground mode.
         bindService(new Intent(this, GpsService.class), mServiceConnection,
                 Context.BIND_AUTO_CREATE);
+
+        image_lthlogo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openPlatsActivity();
+            }
+        });
+
+
     }
 
     @Override
@@ -312,6 +327,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
         infoDialog.show();
+        infoDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
     }
 
     public void closePopUp(){
