@@ -70,9 +70,6 @@ public class PlatsActivity extends AppCompatActivity implements Serializable {
         underRubrik.setText("Du är vid " + plats.title);
         textbox_rubrik.setText(plats.bodyFront);
         textbox.setText(plats.bodyMore);
-
-
-
     }
 
     public void changePlace(String platsTitle){
