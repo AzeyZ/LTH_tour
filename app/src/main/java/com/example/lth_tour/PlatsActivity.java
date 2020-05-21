@@ -78,95 +78,9 @@ public class PlatsActivity extends AppCompatActivity implements Serializable {
         });
         vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
         vibratorPattern = new long[]{0, 50}; //sleep 0 ms, vibrate 50 ms
-
         //String platsTitle = i.getStringExtra(MainActivity.PLATS_TITLE);
         //changePlace(plats.title);
 
-        /*
-        Integer images[] ={R.drawable.mhuset, R.drawable.ehuset, R.drawable.vhuset, R.drawable.ahuset, R.drawable.ikdc, R.drawable.kcentrum, R.drawable.karhuset, R.drawable.mattehuset};
-        imageSwitcher=(ImageSwitcher) findViewById(R.id.imageView2);
-        imageSwitcher.setFactory(new ViewSwitcher.ViewFactory() {
-            @Override
-            public View makeView() {
-                ImageView imageView = new ImageView(getApplicationContext());
-                imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-                imageView.setLayoutParams(
-                        new ImageSwitcher.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT)
-                );
-                return imageView;
-            }
-
-
-
-        });
-        */
-
-     /*   if(platsTitle.equals("M-huset")){
-            infoText.setText("@string/info_Mhuset");
-            imageSwitcher.setImageResource(images[0]);
-            textbox.setText("I M-huset, LTH, finns forskning och undervisning vid institutionerna för: Energivetenskaper," +
-                    "Industriell elektroteknik och automation, Maskinteknologi, Reglerteknik & Teknisk ekonomi och logistik.\n" +
-                    "Välkomna ner i källaren i M-huset där vi i caféet serverar kaffe, mackor och annat lätt att äta.");
-        }
-        else if(platsTitle.equals("E-huset")){
-            infoText.setText( "@string/info_Ehuset");
-            imageSwitcher.setImageResource(images[1]);
-            textbox.setText("E-huset vid LTH är ett gemensamt hus för forskning och undervisning " +
-                    "vid institutionerna för Biomedicinsk teknik, Datavetenskap, Elektro- och informationsteknik " +
-                    "och Fastighetsvetenskap. \nI huset har E-sektionen, D-sektionen samt Lantmätarna sina lokaler.\n" +
-                    "Tillsammans driver de LED-caféet på entréplan, i anslutning till foajén.");
-
-        }
-        else if(platsTitle.equals("V-huset")){
-            infoText.setText( "@string/info_Vhuset");
-            imageSwitcher.setImageResource(images[2]);
-            textbox.setText("I V-huset finns verksamheter som har anknytning till projektering,"+
-                    " byggande och förvaltning av byggnader och annan infrastruktur."+
-                    " De utbildningar som främst har sin anknytning till V-huset är: " +
-                    "Civilingenjörsutbildningen i Väg och vatten, Lantmäteri, Riskhantering och Brandingenjörsutbildningen."
-            );
-        }
-        else if(platsTitle.equals("A-huset")){
-            infoText.setText( "@string/info_Ahuset");
-            imageSwitcher.setImageResource(images[3]);
-            textbox.setText("Här utbildar  och vidareutbildar vi framtidens samhällsbyggare – samtidigt"+
-                    " som vi bygger upp ny kunskap inom de tre forskarutbildningsämnena arkitektur, byggande"+
-                    " och arkitektur och miljöpsykologi. Utbildning och forskning bedrivs av avdelningarna"+
-                    " för arkitektur, boende och bostadsutveckling samt energi och byggnadsdesign.");
-        }
-        else if(platsTitle.equals("IKDC")){
-            infoText.setText("@string/info_IKDC");
-            imageSwitcher.setImageResource(images[4]);
-            textbox.setText("IKDC rymmer Institutionen för designvetenskaper, Industridesignskolan"+
-                    " och flera forskningslaboratorier såsom Virtual Reality-, Usability-, Rapid Prototyping-"+
-                    ", aerosol-, klimat- och mekaniklaboratorier." +
-                    "IKDC är resultatet av Stichting Ikea Foundations satsning för att stötta utbildning i industridesign vid Lunds Tekniska Högskola.");
-        }
-        else if(platsTitle.equals("Kemicentrum")){
-            infoText.setText("@string/info_Kemicentrum");
-            imageSwitcher.setImageResource(images[5]);
-            textbox.setText("På Kemicentrum bedrivs forskning och utbildning inom kemi i världsklass."+
-                    " Här arbetar forskare från olika forskningsområden och inriktningar inom kemin"+
-                    "Kemicentrums läge i det norra universitetsområdet i Lund.bidrar till en kreativ studie-och forskningmiljö." );
-        }
-        else if(platsTitle.equals("Kårhuset")){
-            infoText.setText("@string/info_Karhuset");
-            imageSwitcher.setImageResource(images[6]);
-            textbox.setText("Teknologkåren ville ha ett eget kårhus som teknologerna på KTH och Chalmers hade, men i många år fick de nöja sig med en källare i V-huset." +
-                    "\n" +
-                    "1986 fick teknologerna nog och bestämde sig för att ta saken i egna händer.");
-        }
-        else if(platsTitle.equals("Mattehuset")){
-            infoText.setText("@string/info_Mattehuset");
-            imageSwitcher.setImageResource(images[7]);
-            textbox.setText("Matematikcentrum består av tre avdelningar, Matematik LTH och numerisk analys, Matematik NF och Matematisk statistik" +
-                    "I Mattehuset finns även Hilbert Café som f-sektionen driver, och här kan du bland annat köpa gott kaffe, baguetter och sallader.");
-        }
-        else{
-            infoText.setText( "@string/info_main");
-            imageSwitcher.setImageResource(images[1]);
-            textbox.setText("FEL");
-        }*/
         }
 
     @Override
@@ -200,7 +114,6 @@ public class PlatsActivity extends AppCompatActivity implements Serializable {
             textbox.setText("I M-huset, LTH, finns forskning och undervisning vid institutionerna för: Energivetenskaper," +
                     "Industriell elektroteknik och automation, Maskinteknologi, Reglerteknik & Teknisk ekonomi och logistik.\n" +
                     "Välkomna ner i källaren i M-huset där vi i caféet serverar kaffe, mackor och annat lätt att äta.");
-            //infoText.setText("@string/info_Mhuset");
         }
         else if(platsTitle.equals("E-huset")){
             imageSwitcher.setImageResource(images[1]);
@@ -208,7 +121,6 @@ public class PlatsActivity extends AppCompatActivity implements Serializable {
                     "vid institutionerna för Biomedicinsk teknik, Datavetenskap, Elektro- och informationsteknik " +
                     "och Fastighetsvetenskap. \nI huset har E-sektionen, D-sektionen samt Lantmätarna sina lokaler.\n" +
                     "Tillsammans driver de LED-caféet på entréplan, i anslutning till foajén.");
-            //infoText.setText( "@string/info_Ehuset");
         }
         else if(platsTitle.equals("V-huset")){
             imageSwitcher.setImageResource(images[2]);
@@ -216,7 +128,6 @@ public class PlatsActivity extends AppCompatActivity implements Serializable {
                     " byggande och förvaltning av byggnader och annan infrastruktur."+
                     " De utbildningar som främst har sin anknytning till V-huset är: " +
                     "Civilingenjörsutbildningen i Väg och vatten, Lantmäteri, Riskhantering och Brandingenjörsutbildningen.");
-            //infoText.setText( "@string/info_Vhuset");
         }
         else if(platsTitle.equals("A-huset")){
             imageSwitcher.setImageResource(images[3]);
@@ -224,7 +135,6 @@ public class PlatsActivity extends AppCompatActivity implements Serializable {
                     " som vi bygger upp ny kunskap inom de tre forskarutbildningsämnena arkitektur, byggande"+
                     " och arkitektur och miljöpsykologi. Utbildning och forskning bedrivs av avdelningarna"+
                     " för arkitektur, boende och bostadsutveckling samt energi och byggnadsdesign.");
-            //infoText.setText( "@string/info_Ahuset");
         }
         else if(platsTitle.equals("IKDC")){
             imageSwitcher.setImageResource(images[4]);
@@ -232,32 +142,27 @@ public class PlatsActivity extends AppCompatActivity implements Serializable {
                     " och flera forskningslaboratorier såsom Virtual Reality-, Usability-, Rapid Prototyping-"+
                     ", aerosol-, klimat- och mekaniklaboratorier." +
                     "IKDC är resultatet av Stichting Ikea Foundations satsning för att stötta utbildning i industridesign vid Lunds Tekniska Högskola.");
-            //infoText.setText("@string/info_IKDC");
         }
         else if(platsTitle.equals("Kemicentrum")){
             imageSwitcher.setImageResource(images[5]);
             textbox.setText("På Kemicentrum bedrivs forskning och utbildning inom kemi i världsklass."+
                     " Här arbetar forskare från olika forskningsområden och inriktningar inom kemin"+
                     "Kemicentrums läge i det norra universitetsområdet i Lund.bidrar till en kreativ studie-och forskningmiljö." );
-            //infoText.setText("@string/info_Kemicentrum");
         }
         else if(platsTitle.equals("Kårhuset")){
             imageSwitcher.setImageResource(images[6]);
             textbox.setText("Teknologkåren ville ha ett eget kårhus som teknologerna på KTH och Chalmers hade, men i många år fick de nöja sig med en källare i V-huset." +
                     "\n" +
                     "1986 fick teknologerna nog och bestämde sig för att ta saken i egna händer.");
-            //infoText.setText("@string/info_Karhuset");
         }
         else if(platsTitle.equals("Mattehuset")){
             imageSwitcher.setImageResource(images[7]);
             textbox.setText("Matematikcentrum består av tre avdelningar, Matematik LTH och numerisk analys, Matematik NF och Matematisk statistik" +
                     "I Mattehuset finns även Hilbert Café som f-sektionen driver, och här kan du bland annat köpa gott kaffe, baguetter och sallader.");
-            //infoText.setText("@string/info_Mattehuset");
         }
         else{
             imageSwitcher.setImageResource(images[1]);
             textbox.setText("FEL");
-            //infoText.setText( "@string/info_main");
         }
     }
 
@@ -272,7 +177,34 @@ public class PlatsActivity extends AppCompatActivity implements Serializable {
     public void openPopup(){
         infoDialog.setContentView(R.layout.info_popup);
         closePopUp = (ImageView) infoDialog.findViewById(R.id.closePopUp);
-        //infoText.setText( "@string/info_main");
+        infoText = (TextView) infoDialog.findViewById(R.id.infoText);
+        if(plats.title.equals("M-huset")){
+            infoText.setText("@string/info_Mhuset");
+        }
+        else if(plats.title.equals("E-huset")){
+            infoText.setText( "@string/info_Ehuset");
+        }
+        else if(plats.title.equals("V-huset")){
+            infoText.setText( "@string/info_Vhuset");
+        }
+        else if(plats.title.equals("A-huset")){
+            infoText.setText( "@string/info_Ahuset");
+        }
+        else if(plats.title.equals("IKDC")){
+            infoText.setText("@string/info_IKDC");
+        }
+        else if(plats.title.equals("Kemicentrum")){
+            infoText.setText("@string/info_Kemicentrum");
+        }
+        else if(plats.title.equals("Kårhuset")){
+           infoText.setText("@string/info_Karhuset");
+        }
+        else if(plats.title.equals("Mattehuset")){
+            infoText.setText("@string/info_Mattehuset");
+        }
+        else{
+            infoText.setText( "@string/info_main");
+        }
         closePopUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
