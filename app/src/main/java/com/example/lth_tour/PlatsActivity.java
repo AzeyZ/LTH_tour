@@ -28,7 +28,7 @@ public class PlatsActivity extends AppCompatActivity implements Serializable {
     TextView underRubrik;
     TextView textbox_rubrik;
     TextView textbox;
-    private Button nextPlace;
+    private ImageView nextPlace;
     private String platsTitle;
 
 
@@ -42,7 +42,7 @@ public class PlatsActivity extends AppCompatActivity implements Serializable {
         underRubrik = (TextView) findViewById(R.id.bild_underrubrik);
         textbox_rubrik = (TextView) findViewById(R.id.textbox_rubrik);
         textbox = (TextView) findViewById(R.id.textbox);
-        nextPlace = (Button) findViewById(R.id.next_place);
+        nextPlace = (ImageView) findViewById(R.id.back);
         nextPlace.setOnClickListener(new View.OnClickListener(){
 
             @Override
