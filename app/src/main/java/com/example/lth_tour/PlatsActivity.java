@@ -179,28 +179,28 @@ public class PlatsActivity extends AppCompatActivity implements Serializable {
         closePopUp = (ImageView) infoDialog.findViewById(R.id.closePopUp);
         infoText = (TextView) infoDialog.findViewById(R.id.infoText);
         if(plats.title.equals("M-huset")){
-            infoText.setText("@string/info_Mhuset");
+            infoText.setText("I M-huset finns sektionerna: M (Röd), I (Vin Röd)");
         }
         else if(plats.title.equals("E-huset")){
-            infoText.setText( "@string/info_Ehuset");
+            infoText.setText( "I E-huset finns sektionerna: D (Rosa), E (Vit)");
         }
         else if(plats.title.equals("V-huset")){
-            infoText.setText( "@string/info_Vhuset");
+            infoText.setText( "I V-huset finns sektionen: V (Blå)");
         }
         else if(plats.title.equals("A-huset")){
-            infoText.setText( "@string/info_Ahuset");
+            infoText.setText("I V-huset finns sektionen: A");
         }
         else if(plats.title.equals("IKDC")){
-            infoText.setText("@string/info_IKDC");
+            infoText.setText("Ingvar Kamprad Designcentrum");
         }
         else if(plats.title.equals("Kemicentrum")){
-            infoText.setText("@string/info_Kemicentrum");
+            infoText.setText("I Kemicentrum finns sektionerna: W (Turkus), K (Gula)");
         }
         else if(plats.title.equals("Kårhuset")){
-           infoText.setText("@string/info_Karhuset");
+           infoText.setText("I kärhuset finns Teknologkåren");
         }
         else if(plats.title.equals("Mattehuset")){
-            infoText.setText("@string/info_Mattehuset");
+            infoText.setText("I Kemicentrum finns sektionen: F (Orange)");
         }
         else{
             infoText.setText( "@string/info_main");
