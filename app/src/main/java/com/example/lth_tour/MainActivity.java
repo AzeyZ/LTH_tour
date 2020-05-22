@@ -142,8 +142,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-
-
     public void onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             GpsActivity.indexTour=1;
@@ -152,7 +150,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             super.onBackPressed();
         }
     }
-
 
     @Override
     protected void onStart() {
@@ -236,10 +233,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         super.onStop();
     }
-
-
-
-
+    
     private final SensorEventListener sensorListener = new SensorEventListener(){
 
         @Override

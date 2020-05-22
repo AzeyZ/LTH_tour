@@ -7,6 +7,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 
 import android.os.Vibrator;
@@ -43,6 +47,12 @@ public class PlatsActivity extends AppCompatActivity implements Serializable {
     private Vibrator vibrator;
     private long[] vibratorPattern;
 
+    // Shake sensor
+    private SensorManager sm;
+    private float acelVal; //current acceleration & gravity
+    private float acelLast; //last acceleration & gravity
+    private float shake; //acceleration diffr. from gravity
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,6 +86,11 @@ public class PlatsActivity extends AppCompatActivity implements Serializable {
                 openPopup();
             }
         });
+        sm = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        sm.registerListener(sensorListener, sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
+        acelVal = SensorManager.GRAVITY_EARTH;
+        acelLast = SensorManager.GRAVITY_EARTH;
+        shake = 0.00f;
         vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
         vibratorPattern = new long[]{0, 50}; //sleep 0 ms, vibrate 50 ms
         //String platsTitle = i.getStringExtra(MainActivity.PLATS_TITLE);
@@ -214,7 +229,30 @@ public class PlatsActivity extends AppCompatActivity implements Serializable {
         infoDialog.show();
         infoDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
     }
+    private final SensorEventListener sensorListener = new SensorEventListener(){
 
+        @Override
+        public void onSensorChanged(SensorEvent event) {
+            float x = event.values[0];
+            float y = event.values[1];
+            float z = event.values[2];
+
+            acelLast = acelVal;
+            acelVal = (float)(Math.sqrt((double) (x*x+y*y+z*z) ));
+            float d = acelVal-acelLast;
+
+            shake = shake *0.9f +d;
+            if(shake > 12){
+                closePopUp();
+
+            }
+        }
+
+        @Override
+        public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+        }
+    };
     public void closePopUp(){
         infoDialog.dismiss();
         vibrator.vibrate(vibratorPattern,-1);
