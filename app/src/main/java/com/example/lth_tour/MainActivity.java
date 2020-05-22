@@ -233,7 +233,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         super.onStop();
     }
-    
+
     private final SensorEventListener sensorListener = new SensorEventListener(){
 
         @Override
