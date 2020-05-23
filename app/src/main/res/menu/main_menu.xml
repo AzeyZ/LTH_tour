@@ -6,43 +6,43 @@
 
         <item
             android:id="@+id/nav_mhuset"
-            android:icon="@drawable/ic_home_black_24dp"
+            android:icon="@drawable/ic_m_logo"
             android:title="M-huset"
             />
         <item
             android:id="@+id/nav_ehuset"
-            android:icon="@drawable/ic_home_white_24dp"
+            android:icon="@drawable/ic_e_logo"
             android:title="E-huset"
             />
         <item
             android:id="@+id/nav_vhuset"
-            android:icon="@drawable/ic_home_white_24dp"
+            android:icon="@drawable/ic_v_logo"
             android:title="V-huset"
             />
         <item
             android:id="@+id/nav_ahuset"
-            android:icon="@drawable/ic_home_white_24dp"
+            android:icon="@drawable/ic_a_logo"
             android:title="A-huset"
             />
         <item
         android:id="@+id/nav_ikdc"
-        android:icon="@drawable/ic_home_white_24dp"
+        android:icon="@drawable/ic_home_black_24dp"
         android:title="IKDC"
         />
         <item
             android:id="@+id/nav_khuset"
-            android:icon="@drawable/ic_home_white_24dp"
+            android:icon="@drawable/ic_k_logo"
             android:title="Kemicentrum"
             />
         <item
             android:id="@+id/nav_karhuset"
-            android:icon="@drawable/ic_home_white_24dp"
+            android:icon="@drawable/ic_kar_logo"
             android:title="Kår-huset"
             />
 
         <item
             android:id="@+id/nav_emattehuset"
-            android:icon="@drawable/ic_home_white_24dp"
+            android:icon="@drawable/ic_f_logo"
             android:title="Matte-huset"
             />
 
