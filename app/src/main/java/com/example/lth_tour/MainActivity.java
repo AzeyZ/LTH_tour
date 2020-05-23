@@ -378,10 +378,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         @Override
         public void onReceive(Context context, Intent intent) {
             Location location = intent.getParcelableExtra(GpsService.EXTRA_LOCATION);
-            if (location != null) {
-                Toast.makeText(MainActivity.this, Utils.getLocationText(location),
-                        Toast.LENGTH_SHORT).show();
-            }
         }
     }
 }
