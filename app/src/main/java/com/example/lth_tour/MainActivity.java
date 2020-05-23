@@ -198,15 +198,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // that since this activity is in the foreground, the service can exit foreground mode.
         bindService(new Intent(this, GpsService.class), mServiceConnection,
                 Context.BIND_AUTO_CREATE);
-
-        image_lthlogo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openPlatsActivity();
-            }
-        });
-
-
+        
     }
 
     @Override
